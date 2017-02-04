@@ -55,7 +55,7 @@ namespace AspNetCoreWeb
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, ApplicationDbContext dbContext)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -70,6 +70,8 @@ namespace AspNetCoreWeb
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            dbContext.Database.MigrateAsync();
 
             app.UseStaticFiles();
 
